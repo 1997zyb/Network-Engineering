@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>以太网</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #fff;
+      padding: 48px 20px 40px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    header p {
+      opacity: 0.9;
+      font-size: 1.05rem;
+    }
+    header .en {
+      font-size: 0.95rem;
+      opacity: 0.75;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    h2 {
+      font-size: 1.35rem;
+      color: var(--primary);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-size: 1.05rem;
+      margin: 16px 0 8px;
+      color: var(--text);
+    }
+    p {
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    ul, ol {
+      margin: 8px 0 12px 24px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    .highlight {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .warning {
+      background: #fef3c7;
+      border-left: 4px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .danger {
+      background: #fef2f2;
+      border-left: 4px solid var(--danger);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .term {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-size: 0.92em;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .formula {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 1.02rem;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+    }
+    th {
+      background: var(--primary-light);
+      color: #1e40af;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    .tag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .tag-item {
+      background: var(--primary-light);
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      font-weight: 600;
+      color: #1e40af;
+      font-size: 0.95rem;
+    }
+    .timeline {
+      position: relative;
+      margin: 20px 0 10px;
+      padding-left: 27px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      background: linear-gradient(180deg, #2563eb, #a5b4fc);
+      border-radius: 2px;
+    }
+    .timeline .item {
+      position: relative;
+      padding: 4px 0 18px 8px;
+    }
+    .timeline .item::before {
+      content: "";
+      position: absolute;
+      left: -24px;
+      top: 12px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .timeline .year {
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 8px;
+    }
+    .timeline .item p {
+      margin: 2px 0 0;
+    }
+    .footer {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+    code {
+      background: #f1f5f9;
+      color: #be185d;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: "Consolas", monospace;
+      font-size: 0.92em;
+    }
+    @media (max-width: 640px) {
+      section { padding: 20px 16px; }
+      header h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>以太网</h1>
+    <p>Ethernet · 最广泛应用的局域网技术</p>
+    <p class="en">IEEE 802.3 Standard</p>
+  </header>
+
+  <div class="container">
+
+    <!-- 概述 -->
+    <section>
+      <h2>一、以太网概述</h2>
+      <p><b>以太网（Ethernet）</b>是由 Xerox 公司于 <b>1975 年</b>研制、后由 DEC / Intel / Xerox 联合制定的局域网规范，1983 年被 IEEE 采纳为 <b>IEEE 802.3</b> 标准。它是目前应用最广泛的局域网技术，占局域网市场份额的 90% 以上。</p>
+      <div class="highlight">
+        以太网的基本特征：<b>广播信道、总线型/星型拓扑、基带传输、CSMA/CD 介质访问控制（早期）、无连接与尽力而为</b>。
+      </div>
+      <h3>以太网的特点</h3>
+      <ul>
+        <li><span class="term">无连接</span>发送前不建立连接，直接发送数据帧，出错则丢弃；</li>
+        <li><span class="term">尽力而为</span>不提供可靠传输服务，差错控制与重传交给上层（TCP）处理；</li>
+        <li><span class="term">帧不定长</span>帧长范围 64 ~ 1518 字节，采用 <b>曼彻斯特编码</b>（早期）保证时钟同步；</li>
+        <li><span class="term">廉价简单</span>协议简单、硬件成本低、易于扩展，是它取胜的关键。</li>
+      </ul>
+    </section>
+
+    <!-- 发展历程 -->
+    <section>
+      <h2>二、以太网的发展历程</h2>
+      <div class="timeline">
+        <div class="item">
+          <span class="year">1973</span><p>Metcalfe 在 Xerox PARC 发明以太网原型。</p>
+        </div>
+        <div class="item">
+          <span class="year">1983</span><p>IEEE 802.3 标准正式发布，10BASE-5（粗缆）问世。</p>
+        </div>
+        <div class="item">
+          <span class="year">1990</span><p><b>10BASE-T</b> 出现，双绞线 + 集线器，星型拓扑取代总线。</p>
+        </div>
+        <div class="item">
+          <span class="year">1995</span><p><b>快速以太网 100BASE-T</b>，速率提升 10 倍，兼容原帧格式。</p>
+        </div>
+        <div class="item">
+          <span class="year">1998</span><p><b>千兆以太网 1000BASE-X</b>，光纤 / 双绞线，进入交换式时代。</p>
+        </div>
+        <div class="item">
+          <span class="year">2002</span><p><b>万兆以太网 10GBASE</b>，全面转向全双工、光纤远距离传输。</p>
+        </div>
+        <div class="item">
+          <span class="year">2010s</span><p><b>40/100 Gb/s 以太网</b>，应用于数据中心与骨干网络。</p>
+        </div>
+      </div>
+      <p>发展规律：速率每代提升 10 倍，且<b>始终保持向后兼容</b>（相同的帧格式、相同的接口思想），这是以太网长盛不衰的重要原因。</p>
+    </section>
+
+    <!-- 帧格式 -->
+    <section>
+      <h2>三、以太网 MAC 帧格式</h2>
+      <p>目前使用最广的是 <b>DIX Ethernet II</b> 帧格式，字段如下：</p>
+      <table>
+        <tr>
+          <th>字段</th>
+          <th>长度</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>前导码（Preamble）</td>
+          <td>7 字节</td>
+          <td>1010… 交替比特，用于接收方时钟同步</td>
+        </tr>
+        <tr>
+          <td>帧开始定界符（SFD）</td>
+          <td>1 字节</td>
+          <td>10101011，标识帧起始</td>
+        </tr>
+        <tr>
+          <td>目的地址（DA）</td>
+          <td>6 字节</td>
+          <td>目的站 MAC 地址</td>
+        </tr>
+        <tr>
+          <td>源地址（SA）</td>
+          <td>6 字节</td>
+          <td>发送站 MAC 地址</td>
+        </tr>
+        <tr>
+          <td>类型（Type）</td>
+          <td>2 字节</td>
+          <td>上层协议类型，如 0x0800（IPv4）、0x0806（ARP）</td>
+        </tr>
+        <tr>
+          <td>数据（Data）</td>
+          <td>46 ~ 1500 字节</td>
+          <td>不足 46 字节需填充（保证 ≥ 64 字节）</td>
+        </tr>
+        <tr>
+          <td>帧校验（FCS）</td>
+          <td>4 字节</td>
+          <td>CRC-32，对地址 + 类型 + 数据字段检错</td>
+        </tr>
+      </table>
+      <div class="formula">帧总长 = 6 + 6 + 2 + 46~1500 + 4 = 64 ~ 1518 字节</div>
+      <p>IEEE 802.3 帧与 DIX 帧的区别仅在于"类型/长度"字段：802.3 用它表示数据长度，DIX 用它表示上层协议类型（当值 ≤ 1500 时为长度，≥ 1536 时为类型，以此区分两种帧）。</p>
+    </section>
+
+    <!-- 发送接收过程 -->
+    <section>
+      <h2>四、帧的发送与接收过程</h2>
+      <h3>发送流程</h3>
+      <ul>
+        <li>上层交付数据，MAC 子层组装成帧（封装）；</li>
+        <li>半双工模式下先执行 <b>CSMA/CD</b> 介质访问控制（见《CSMA/CD》页）；</li>
+        <li>逐比特按曼彻斯特编码后送入物理介质发送。</li>
+      </ul>
+      <h3>接收流程</h3>
+      <ul>
+        <li>物理层检测到帧前导码，进入接收状态；</li>
+        <li>MAC 子层校验 <b>FCS</b>：出错则丢弃并计数；</li>
+        <li>检查目的地址：匹配自身 / 组播 / 广播才上交上层，否则丢弃；</li>
+        <li>检查帧长：小于 64 字节的"<b>冲突碎片</b>"直接丢弃。</li>
+      </ul>
+      <div class="warning">
+        无差错接收 ≠ 可靠传输：以太网只保证<b>检错不纠错</b>，被丢弃的帧由 TCP 等上层协议负责重传。
+      </div>
+    </section>
+
+    <!-- 交换机原理 -->
+    <section>
+      <h2>五、以太网交换机的工作原理</h2>
+      <p>交换机是<b>多端口网桥</b>，工作在数据链路层，核心是<b>MAC 地址表</b>（端口-地址映射表）：</p>
+      <ol>
+        <li><b>学习</b>：每收到一帧，记录其<b>源 MAC 地址</b>与<b>入端口</b>的对应关系（学习算法）；</li>
+        <li><b>查表转发</b>：根据<b>目的 MAC 地址</b>查表——命中则从对应端口<b>单播转发</b>；</li>
+        <li><b>泛洪</b>：未命中（目的地址不在表中）或为<b>广播/组播</b>帧时，向除入端口外的<b>所有端口</b>转发；</li>
+        <li><b>丢弃</b>：目的地址对应的端口就是入端口时，帧无需转发，直接丢弃；</li>
+        <li><b>老化</b>：地址表项设有生存时间（默认 300 s），长时间未出现的地址自动删除，防止陈旧表项。</li>
+      </ol>
+      <table>
+        <tr>
+          <th>转发方式</th>
+          <th>时机</th>
+          <th>优点</th>
+          <th>缺点</th>
+        </tr>
+        <tr>
+          <td><b>存储转发</b></td>
+          <td>收完整帧并校验无误后转发</td>
+          <td>差错控制强、支持不同速率端口互连</td>
+          <td>时延大</td>
+        </tr>
+        <tr>
+          <td><b>直通</b>（Cut-through）</td>
+          <td>收到目的地址（前 6 字节）即转发</td>
+          <td>时延极小</td>
+          <td>不检错，坏帧也被转发</td>
+        </tr>
+      </table>
+      <div class="highlight">
+        记忆点：交换机<b>隔离冲突域、不隔离广播域</b>；集线器两者都不隔离；路由器（或 VLAN）隔离广播域。
+      </div>
+    </section>
+
+    <!-- 网卡 -->
+    <section>
+      <h2>六、网卡（NIC）</h2>
+      <p><b>网卡（Network Interface Card）</b>是主机接入以太网的接口设备，实现物理层 + 数据链路层功能：</p>
+      <ul>
+        <li><span class="term">串并转换</span>CPU 处理的并行数据 ↔ 线上传输的串行比特流；</li>
+        <li><span class="term">缓存</span>数据缓冲，协调收发速度；</li>
+        <li><span class="term">封装/解封装</span>组装 MAC 帧、剥离帧首尾；</li>
+        <li><span class="term">编码</span>曼彻斯特编码/解码；</li>
+        <li><span class="term">过滤</span>按目的地址过滤不属于本机的帧；</li>
+        <li><span class="term">CSMA/CD</span>半双工下执行介质访问控制；</li>
+        <li>每块网卡出厂时烧录唯一的 <b>MAC 地址</b>，且具备 MAC 地址过滤功能。</li>
+      </ul>
+    </section>
+
+    <!-- 性能指标 -->
+    <section>
+      <h2>七、以太网的性能指标</h2>
+      <table>
+        <tr>
+          <th>指标</th>
+          <th>定义 / 公式</th>
+        </tr>
+        <tr>
+          <td>数据传输速率</td>
+          <td>每秒传输的比特数，10 / 100 / 1000 / 10G Mb/s</td>
+        </tr>
+        <tr>
+          <td>信道利用率</td>
+          <td>实际有效数据传输时间 ÷ 总时间；CSMA/CD 下负载越大利用率越低</td>
+        </tr>
+        <tr>
+          <td>吞吐量</td>
+          <td>单位时间实际成功传输的数据量（≤ 数据率）</td>
+        </tr>
+        <tr>
+          <td>时延</td>
+          <td>发送时延 + 传播时延 + 处理时延 + 排队时延</td>
+        </tr>
+      </table>
+      <div class="danger">
+        易错点：<b>数据率 ≠ 吞吐量</b>。数据率是理论最大值，吞吐量还受冲突、控制开销、帧间间隔（9.6 μs）等因素影响，实际往往只有数据率的 40%~60%。
+      </div>
+    </section>
+
+    <!-- 要点小结 -->
+    <section>
+      <h2>八、要点小结</h2>
+      <ul>
+        <li><span class="term">标准</span>IEEE 802.3，DIX Ethernet II 为通用帧格式。</li>
+        <li><span class="term">帧</span>64 ~ 1518 字节；数据不足 46 字节需填充；CRC-32 检错。</li>
+        <li><span class="term">特征</span>无连接、尽力而为、曼彻斯特编码、CSMA/CD（半双工）。</li>
+        <li><span class="term">交换机</span>MAC 表学习/泛洪/转发/丢弃/老化；隔离冲突域、不隔离广播域。</li>
+        <li><span class="term">进化</span>10M → 100M → 1G → 10G → 100G，全程向后兼容。</li>
+        <li><span class="term">网卡</span>数据链路层设备，集封装、编码、过滤、CSMA/CD 于一体。</li>
+      </ul>
+    </section>
+
+    <div class="footer">《计算机网络》第二章 · 以太网 学习笔记 · 关联：《1.CSMA.html》《2.MAC地址.html》</div>
+  </div>
+</body>
+</html>

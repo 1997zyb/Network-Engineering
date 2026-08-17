@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAC地址</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #fff;
+      padding: 48px 20px 40px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    header p {
+      opacity: 0.9;
+      font-size: 1.05rem;
+    }
+    header .en {
+      font-size: 0.95rem;
+      opacity: 0.75;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    h2 {
+      font-size: 1.35rem;
+      color: var(--primary);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-size: 1.05rem;
+      margin: 16px 0 8px;
+      color: var(--text);
+    }
+    p {
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    ul, ol {
+      margin: 8px 0 12px 24px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    .highlight {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .warning {
+      background: #fef3c7;
+      border-left: 4px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .danger {
+      background: #fef2f2;
+      border-left: 4px solid var(--danger);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .term {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-size: 0.92em;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .mac-demo {
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      background: #0f172a;
+      color: #fbbf24;
+      padding: 16px 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 14px 0;
+      word-break: break-all;
+    }
+    .bits {
+      font-family: "Consolas", "Courier New", monospace;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .bits .oui {
+      color: var(--danger);
+      font-weight: 700;
+    }
+    .bits .uid {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .bits .label {
+      color: var(--text-light);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+    }
+    th {
+      background: var(--primary-light);
+      color: #1e40af;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    .tag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .tag-item {
+      background: var(--primary-light);
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      font-weight: 600;
+      color: #1e40af;
+      font-size: 0.95rem;
+    }
+    .footer {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+    code {
+      background: #f1f5f9;
+      color: #be185d;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: "Consolas", monospace;
+      font-size: 0.92em;
+    }
+    @media (max-width: 640px) {
+      section { padding: 20px 16px; }
+      header h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MAC 地址</h1>
+    <p>物理地址 · 网卡的全球唯一身份标识</p>
+    <p class="en">Media Access Control Address</p>
+  </header>
+
+  <div class="container">
+
+    <!-- 概述 -->
+    <section>
+      <h2>一、什么是 MAC 地址</h2>
+      <p><b>MAC 地址（Media Access Control Address）</b>，又称<b>物理地址（Physical Address）</b>或<b>硬件地址（Hardware Address）</b>，是烧录在网卡（NIC）<b>ROM</b> 中、由 IEEE 统一管理的<b>全球唯一</b>标识，工作在 <b>数据链路层</b>，用于在局域网内唯一标识每个接口/站点。</p>
+      <div class="mac-demo">44-2A-60-1F-3B-8C</div>
+      <div class="highlight">
+        关键区分 —— MAC 地址 vs IP 地址：<br>
+        <b>IP 地址</b>：逻辑地址，工作在<b>网络层</b>，可随网络位置改变，实现跨网络寻址；<br>
+        <b>MAC 地址</b>：物理地址，工作在<b>数据链路层</b>，出厂固化、全球唯一，只在本局域网内寻址。
+      </div>
+    </section>
+
+    <!-- 格式与构成 -->
+    <section>
+      <h2>二、MAC 地址的格式与构成</h2>
+      <ul>
+        <li>长度：<b>48 位（6 字节）</b>，共 2⁴⁸ ≈ 2.8 × 10¹⁴ 个可用地址；</li>
+        <li>表示：十六进制，每 8 位一组，常用连字符 <code>44-2A-60-1F-3B-8C</code>、冒号 <code>44:2A:60:1F:3B:8C</code> 或点分 <code>442A.601F.3B8C</code>（Cisco 格式）；</li>
+        <li>构成：前 3 字节（24 位）为厂商代码 <b>OUI</b>，后 3 字节（24 位）为厂商分配的序列号。</li>
+      </ul>
+      <div class="bits"><span class="label">48 bit 构成：</span><span class="oui">44-2A-60</span> <span class="label">|</span> <span class="uid">1F-3B-8C</span><br><span class="oui">└──── OUI 厂商代码（IEEE 分配）────┘</span> <span class="uid">└──── 序列号（厂商自定）────┘</span></div>
+      <p>注意：网卡的 MAC 地址是<b>硬件固定</b>的，但可通过驱动程序<b>修改</b>（MAC 地址欺骗/克隆），这是合法的网络管理手段，但也可能被用于绕过访问控制。</p>
+    </section>
+
+    <!-- 地址类型 -->
+    <section>
+      <h2>三、MAC 地址的类型</h2>
+      <p>判断依据：目的地址<b>首字节的最低有效位（I/G 位）</b>，以及是否全 1：</p>
+      <table>
+        <tr>
+          <th>类型</th>
+          <th>判定特征</th>
+          <th>作用范围</th>
+          <th>示例</th>
+        </tr>
+        <tr>
+          <td><b>单播</b>（Unicast）</td>
+          <td>I/G = 0（首字节为偶数）</td>
+          <td>唯一一个站点</td>
+          <td>44-2A-60-1F-3B-8C</td>
+        </tr>
+        <tr>
+          <td><b>组播</b>（Multicast）</td>
+          <td>I/G = 1（首字节为奇数）</td>
+          <td>一组站点</td>
+          <td>01-00-5E-00-00-01</td>
+        </tr>
+        <tr>
+          <td><b>广播</b>（Broadcast）</td>
+          <td>全部 48 位为 1</td>
+          <td>本网段所有站点</td>
+          <td>FF-FF-FF-FF-FF-FF</td>
+        </tr>
+      </table>
+      <div class="warning">
+        记忆技巧：<b>首位为奇数 → 组播，全 FF → 广播</b>。广播地址是组播地址的一种特殊情况，二者都不属于任何单一设备。
+      </div>
+      <h3>网卡对收到的帧如何处理</h3>
+      <ol>
+        <li>目的 MAC = 本机单播地址 → <b>接收</b>；</li>
+        <li>目的 MAC = 本机加入的组播地址 → 接收（组播过滤）；</li>
+        <li>目的 MAC = 广播地址 → 接收；</li>
+        <li>其余一律 <b>丢弃</b>。</li>
+      </ol>
+    </section>
+
+    <!-- MAC表 -->
+    <section>
+      <h2>四、MAC 地址表与交换机</h2>
+      <p>交换机通过维护一张<b>MAC 地址表</b>（端口-地址映射表）实现帧的精确转发：</p>
+      <table>
+        <tr>
+          <th>MAC 地址</th>
+          <th>所在端口</th>
+          <th>老化时间</th>
+        </tr>
+        <tr>
+          <td>44-2A-60-1F-3B-8C</td>
+          <td>Fa0/1</td>
+          <td>300 s</td>
+        </tr>
+        <tr>
+          <td>00-1A-2B-3C-4D-5E</td>
+          <td>Fa0/3</td>
+          <td>300 s</td>
+        </tr>
+        <tr>
+          <td>…</td>
+          <td>…</td>
+          <td>…</td>
+        </tr>
+      </table>
+      <p>表项的建立靠<b>自学习</b>：收到帧时记录源地址与入端口；转发时查目的地址——命中则单播转发，未命中则泛洪，之后接收方回包即可让交换机"记住"它。</p>
+      <div class="danger">
+        易错点：MAC 地址表是<b>交换机</b>的设备，不是路由表。路由器使用的是 IP 路由表（网络层），二者不要混淆。
+      </div>
+    </section>
+
+    <!-- 应用场景 -->
+    <section>
+      <h2>五、MAC 地址的典型应用</h2>
+      <div class="tag-grid">
+        <div class="tag-item">ARP 协议</div>
+        <div class="tag-item">以太网帧寻址</div>
+        <div class="tag-item">交换机地址表</div>
+        <div class="tag-item">MAC 地址过滤/绑定</div>
+        <div class="tag-item">无状态地址自动配置（IPv6 SLAAC）</div>
+      </div>
+      <ul>
+        <li><span class="term">ARP</span>通过 IP 地址解析出对应主机的 MAC 地址（见网络层章节）；</li>
+        <li><span class="term">IPv6</span>接口地址可由 MAC 地址经 EUI-64 算法自动生成（SLAAC），无需 DHCP；</li>
+        <li><span class="term">安全</span>路由器/交换机可配置 MAC 过滤（允许/禁止特定设备入网）与端口安全绑定。</li>
+      </ul>
+    </section>
+
+    <!-- 要点小结 -->
+    <section>
+      <h2>六、要点小结</h2>
+      <ul>
+        <li><span class="term">定义</span>数据链路层物理地址，48 位 / 6 字节，十六进制表示，全球唯一。</li>
+        <li><span class="term">构成</span>OUI（前 24 位，IEEE 分配）+ 厂商序列号（后 24 位）。</li>
+        <li><span class="term">类型</span>单播（I/G=0）、组播（I/G=1）、广播（全 FF）。</li>
+        <li><span class="term">作用域</span>仅限本局域网，跨网段传输时帧的 MAC 逐跳改写，IP 不变。</li>
+        <li><span class="term">配套</span>ARP 解析 IP→MAC；交换机 MAC 表实现精准转发。</li>
+        <li><span class="term">考点</span>MAC 地址与 IP 地址区别、I/G 位判定、广播地址 FF-FF-FF-FF-FF-FF。</li>
+      </ul>
+    </section>
+
+    <div class="footer">《计算机网络》第二章 · MAC地址 学习笔记 · 关联：《1.CSMA.html》《3.以太网.html》</div>
+  </div>
+</body>
+</html>
